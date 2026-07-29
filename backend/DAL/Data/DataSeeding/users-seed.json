@@ -1,0 +1,128 @@
+[
+  {
+    "UserType": "Doctor",
+    "Fullname": "Dr. Ahmed Hassan",
+    "UserName": "dr.ahmed",
+    "Email": "ahmed.hassan@tabiby.com",
+    "Password": "Doctor@123456",
+    "IsActive": true,
+    "Role": "Doctor",
+    "Specialty": "Cardiology",
+    "Location": "Cairo - Nasr City"
+  },
+  {
+    "UserType": "Doctor",
+    "Fullname": "Dr. Sara Mohamed",
+    "UserName": "dr.sara",
+    "Email": "sara.mohamed@tabiby.com",
+    "Password": "Doctor@123456",
+    "IsActive": true,
+    "Role": "Doctor",
+    "Specialty": "Dermatology",
+    "Location": "Cairo - Heliopolis"
+  },
+  {
+    "UserType": "Doctor",
+    "Fullname": "Dr. Khaled Nour",
+    "UserName": "dr.khaled",
+    "Email": "khaled.nour@tabiby.com",
+    "Password": "Doctor@123456",
+    "IsActive": true,
+    "Role": "Doctor",
+    "Specialty": "Orthopedics",
+    "Location": "Giza - Mohandessin"
+  },
+  {
+    "UserType": "Patient",
+    "Fullname": "Mohamed Ali",
+    "UserName": "mohamed.ali",
+    "Email": "mohamed.ali@gmail.com",
+    "Password": "Patient@123456",
+    "IsActive": true,
+    "Role": "Patient",
+    "Address": "Cairo - Maadi, 15 El-Nasr Street",
+    "DateOfBirth": "1990-05-15T00:00:00"
+  },
+  {
+    "UserType": "Patient",
+    "Fullname": "Nour Ibrahim",
+    "UserName": "nour.ibrahim",
+    "Email": "nour.ibrahim@gmail.com",
+    "Password": "Patient@123456",
+    "IsActive": true,
+    "Role": "Patient",
+    "Address": "Cairo - Heliopolis, 7 El-Nozha Street",
+    "DateOfBirth": "1995-08-22T00:00:00"
+  },
+  {
+    "UserType": "Patient",
+    "Fullname": "Layla Sayed",
+    "UserName": "layla.sayed",
+    "Email": "layla.sayed@gmail.com",
+    "Password": "Patient@123456",
+    "IsActive": true,
+    "Role": "Patient",
+    "Address": "Alexandria - Smouha, 3 El-Geish Road",
+    "DateOfBirth": "1988-03-10T00:00:00"
+  },
+  {
+    "UserType": "Patient",
+    "Fullname": "Omar Farouk",
+    "UserName": "omar.farouk",
+    "Email": "omar.farouk@gmail.com",
+    "Password": "Patient@123456",
+    "IsActive": true,
+    "Role": "Patient",
+    "Address": "Giza - Dokki, 22 El-Tahrir Square",
+    "DateOfBirth": "2000-11-30T00:00:00"
+  },
+  {
+    "UserType": "Nurse",
+    "Fullname": "Hana Mostafa",
+    "UserName": "nurse.hana",
+    "Email": "hana.mostafa@tabiby.com",
+    "Password": "Nurse@123456",
+    "IsActive": true,
+    "Role": "Nurse",
+    "Specialization": "Pediatric Care"
+  },
+  {
+    "UserType": "Nurse",
+    "Fullname": "Rania Adel",
+    "UserName": "nurse.rania",
+    "Email": "rania.adel@tabiby.com",
+    "Password": "Nurse@123456",
+    "IsActive": true,
+    "Role": "Nurse",
+    "Specialization": "Elderly Care"
+  },
+  {
+    "UserType": "Pharmacist",
+    "Fullname": "Amr Samir",
+    "UserName": "pharmacist.amr",
+    "Email": "amr.samir@tabiby.com",
+    "Password": "Pharma@123456",
+    "IsActive": true,
+    "Role": "Pharmacist",
+    "PharmacyName": "Al-Shifa Pharmacy"
+  },
+  {
+    "UserType": "Pharmacist",
+    "Fullname": "Dina Kamal",
+    "UserName": "pharmacist.dina",
+    "Email": "dina.kamal@tabiby.com",
+    "Password": "Pharma@123456",
+    "IsActive": true,
+    "Role": "Pharmacist",
+    "PharmacyName": "El-Dawaa Pharmacy"
+  },
+  {
+    "UserType": "Admin",
+    "Fullname": "Admin Tabiby",
+    "UserName": "admin",
+    "Email": "admin@tabiby.com",
+    "Password": "Admin@123456",
+    "IsActive": true,
+    "Role": "Admin"
+  }
+]

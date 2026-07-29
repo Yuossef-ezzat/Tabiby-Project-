@@ -1,0 +1,58 @@
+[
+  {
+    "DoctorId": 2,
+    "DayOfWeek": 1,
+    "StartTime": "09:00:00",
+    "EndTime": "13:00:00",
+    "IsAvailable": true
+  },
+  {
+    "DoctorId": 3,
+    "DayOfWeek": 3,
+    "StartTime": "09:00:00",
+    "EndTime": "13:00:00",
+    "IsAvailable": true
+  },
+  {
+    "DoctorId": 4,
+    "DayOfWeek": 4,
+    "StartTime": "16:00:00",
+    "EndTime": "20:00:00",
+    "IsAvailable": true
+  },
+  {
+    "DoctorId": 2,
+    "DayOfWeek": 0,
+    "StartTime": "10:00:00",
+    "EndTime": "14:00:00",
+    "IsAvailable": true
+  },
+  {
+    "DoctorId": 2,
+    "DayOfWeek": 2,
+    "StartTime": "10:00:00",
+    "EndTime": "14:00:00",
+    "IsAvailable": true
+  },
+  {
+    "DoctorId": 2,
+    "DayOfWeek": 4,
+    "StartTime": "10:00:00",
+    "EndTime": "14:00:00",
+    "IsAvailable": false
+  },
+  {
+    "DoctorId": 3,
+    "DayOfWeek": 1,
+    "StartTime": "14:00:00",
+    "EndTime": "18:00:00",
+    "IsAvailable": true
+  },
+  {
+    "DoctorId": 3,
+    "DayOfWeek": 3,
+    "StartTime": "14:00:00",
+    "EndTime": "18:00:00",
+    "IsAvailable": true
+  }
+]

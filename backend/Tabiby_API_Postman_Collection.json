@@ -1,0 +1,574 @@
+{
+  "info": {
+    "_postman_id": "tabiby-api-collection",
+    "name": "Tabiby API - Complete Collection",
+    "description": "Complete API collection for Tabiby Project. Base URL: https://localhost:7000\n\n**Instructions:**\n1. Run 'Register' or 'Login' first\n2. Copy the 'token' from the response\n3. Set it in the collection variable 'token'\n4. All protected endpoints will use it automatically",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://localhost:7000",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "PASTE_YOUR_JWT_TOKEN_HERE",
+      "type": "string"
+    },
+    {
+      "key": "patientToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "pharmacistToken",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "item": [
+    {
+      "name": "🔐 Auth",
+      "item": [
+        {
+          "name": "Register (Patient)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.token) {",
+                  "    pm.collectionVariables.set('token', jsonData.token);",
+                  "    pm.collectionVariables.set('patientToken', jsonData.token);",
+                  "    console.log('Token saved:', jsonData.token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"patient@tabiby.com\",\n  \"password\": \"Patient@123\",\n  \"userName\": \"patient_user\",\n  \"displayName\": \"Ahmed Mohamed\",\n  \"phoneNumber\": \"01012345678\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/Auth/Register",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Auth", "Register"]
+            }
+          }
+        },
+        {
+          "name": "Login (Patient)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.token) {",
+                  "    pm.collectionVariables.set('token', jsonData.token);",
+                  "    pm.collectionVariables.set('patientToken', jsonData.token);",
+                  "    console.log('Patient Token saved');",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"patient@tabiby.com\",\n  \"password\": \"Patient@123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/Auth/Login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Auth", "Login"]
+            }
+          }
+        },
+        {
+          "name": "Login (Pharmacist)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.token) {",
+                  "    pm.collectionVariables.set('pharmacistToken', jsonData.token);",
+                  "    console.log('Pharmacist Token saved');",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"pharmacist@tabiby.com\",\n  \"password\": \"Pharmacist@123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/Auth/Login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Auth", "Login"]
+            }
+          }
+        },
+        {
+          "name": "Forget Password",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"patient@tabiby.com\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/Auth/forget-password",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Auth", "forget-password"]
+            }
+          }
+        },
+        {
+          "name": "Reset Password",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"patient@tabiby.com\",\n  \"token\": \"RESET_TOKEN_FROM_EMAIL\",\n  \"newPassword\": \"NewPassword@123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/Auth/reset-password",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Auth", "reset-password"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "💊 Medication",
+      "item": [
+        {
+          "name": "Get All Medications (Public)",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/Medication/GetAll",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Medication", "GetAll"]
+            }
+          }
+        },
+        {
+          "name": "Get Medication By Id (Public)",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/Medication/GetById/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Medication", "GetById", "1"]
+            }
+          }
+        },
+        {
+          "name": "Create Medication (Pharmacist Only)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{pharmacistToken}}", "type": "string" }]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "Name", "value": "Panadol Extra", "type": "text" },
+                { "key": "Price", "value": "25.5", "type": "text" },
+                { "key": "Stock", "value": "100", "type": "text" },
+                { "key": "IsAvailable", "value": "true", "type": "text" },
+                { "key": "Description", "value": "Pain reliever and fever reducer", "type": "text" },
+                { "key": "Image", "src": [], "type": "file", "description": "Optional image file" }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/Medication/CreateMedication",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Medication", "CreateMedication"]
+            }
+          }
+        },
+        {
+          "name": "Update Medication (Pharmacist Only)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{pharmacistToken}}", "type": "string" }]
+            },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Panadol Extra Updated\",\n  \"price\": 30.0,\n  \"stock\": 150,\n  \"isAvailable\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/Medication/UpdateMedication/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Medication", "UpdateMedication", "1"]
+            }
+          }
+        },
+        {
+          "name": "Delete Medication (Pharmacist Only)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{pharmacistToken}}", "type": "string" }]
+            },
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/api/Medication/DeleteMedication/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Medication", "DeleteMedication", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🛒 Basket (Patient Only)",
+      "item": [
+        {
+          "name": "Get My Basket",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/Basket",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Basket"]
+            }
+          }
+        },
+        {
+          "name": "Add Item to Basket",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"medicationId\": 1,\n  \"quantity\": 2\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/Basket/AddItem",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Basket", "AddItem"]
+            }
+          }
+        },
+        {
+          "name": "Update Item Quantity",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "5"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/Basket/UpdateItem/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Basket", "UpdateItem", "1"]
+            },
+            "description": "Path param: medicationId=1, Body: new quantity as integer"
+          }
+        },
+        {
+          "name": "Remove Item from Basket",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/api/Basket/RemoveItem/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Basket", "RemoveItem", "1"]
+            },
+            "description": "Path param: medicationId=1"
+          }
+        },
+        {
+          "name": "Clear Basket",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/api/Basket/Clear",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Basket", "Clear"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "📦 Order",
+      "item": [
+        {
+          "name": "👤 Patient Endpoints",
+          "item": [
+            {
+              "name": "Get My Orders",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{baseUrl}}/api/Order/MyOrders",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "Order", "MyOrders"]
+                }
+              }
+            },
+            {
+              "name": "Get My Order By Id",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{baseUrl}}/api/Order/GetMyOrder/1",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "Order", "GetMyOrder", "1"]
+                }
+              }
+            },
+            {
+              "name": "Create Order",
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"address\": {\n    \"firstName\": \"Ahmed\",\n    \"lastName\": \"Mohamed\",\n    \"city\": \"Cairo\",\n    \"country\": \"Egypt\",\n    \"street\": \"123 Tahrir St\"\n  }\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/Order/Create",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "Order", "Create"]
+                },
+                "description": "No basketId needed - system auto-fetches the patient's active basket"
+              }
+            },
+            {
+              "name": "Cancel Order",
+              "request": {
+                "method": "POST",
+                "url": {
+                  "raw": "{{baseUrl}}/api/Order/Cancel/1",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "Order", "Cancel", "1"]
+                },
+                "description": "Only works if order is still Pending"
+              }
+            }
+          ]
+        },
+        {
+          "name": "🏪 Pharmacist Endpoints",
+          "item": [
+            {
+              "name": "Get All Orders",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [{ "key": "token", "value": "{{pharmacistToken}}", "type": "string" }]
+                },
+                "method": "GET",
+                "url": {
+                  "raw": "{{baseUrl}}/api/Order/Orders",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "Order", "Orders"]
+                }
+              }
+            },
+            {
+              "name": "Get Order By Id (Pharmacist)",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [{ "key": "token", "value": "{{pharmacistToken}}", "type": "string" }]
+                },
+                "method": "GET",
+                "url": {
+                  "raw": "{{baseUrl}}/api/Order/GetOrder/1",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "Order", "GetOrder", "1"]
+                }
+              }
+            },
+            {
+              "name": "Update Order Status - Processing",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [{ "key": "token", "value": "{{pharmacistToken}}", "type": "string" }]
+                },
+                "method": "PUT",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/Order/Orders/1/Status",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "Order", "Orders", "1", "Status"]
+                },
+                "description": "OrderStatus Enum values:\n0 = Pending\n1 = Processing\n2 = Shipped\n3 = Delivered\n4 = Cancelled\n5 = Rejected"
+              }
+            },
+            {
+              "name": "Update Order Status - Rejected (Restores Stock)",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [{ "key": "token", "value": "{{pharmacistToken}}", "type": "string" }]
+                },
+                "method": "PUT",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": 5\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/Order/Orders/1/Status",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "Order", "Orders", "1", "Status"]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "🩺 Consultation",
+      "item": [
+        {
+          "name": "Get All Doctors (Public)",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/Consultation/GetAllDoctors?name=&specialization=",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Consultation", "GetAllDoctors"],
+              "query": [
+                { "key": "name", "value": "", "description": "Filter by doctor name (optional)" },
+                { "key": "specialization", "value": "", "description": "Filter by specialization (optional)" }
+              ]
+            },
+            "description": "⚠️ WARNING: This endpoint will return 500 error because SearchDoctorsAsync is not implemented yet"
+          }
+        },
+        {
+          "name": "Request Consultation (Patient)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"doctorId\": 1\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/Consultation/RequestConsultation",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Consultation", "RequestConsultation"]
+            }
+          }
+        },
+        {
+          "name": "Get My Consultations (Patient or Doctor)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/Consultation/MyConsultations",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Consultation", "MyConsultations"]
+            }
+          }
+        },
+        {
+          "name": "Get Consultation By Id",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/Consultation/GetMyConsultationById/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Consultation", "GetMyConsultationById", "1"]
+            }
+          }
+        },
+        {
+          "name": "Delete Consultation (Doctor Only)",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/api/Consultation/DeleteConsultation/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Consultation", "DeleteConsultation", "1"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+  body {
+    @apply font-body text-slate-700 bg-mist-50 antialiased;
+  }
+  h1, h2, h3, h4, h5 {
+    @apply font-display text-ink-900;
+  }
+  :focus-visible {
+    @apply outline-none ring-2 ring-vital-500 ring-offset-2 ring-offset-mist-50;
+  }
+}
+
+@layer components {
+  /* Frosted glass card used across the auth flow */
+  .glass-panel {
+    background: rgba(10, 22, 40, 0.52);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-vital-500 px-5 py-3
+      font-body font-semibold text-ink-950 shadow-card transition-all duration-200
+      hover:bg-vital-400 hover:-translate-y-0.5 active:translate-y-0
+      disabled:opacity-50 disabled:pointer-events-none;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-mist-300 bg-white px-5 py-3
+      font-body font-semibold text-slate-700 transition-all duration-200
+      hover:border-vital-500 hover:text-vital-600
+      disabled:opacity-50 disabled:pointer-events-none;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5
+      font-body font-medium text-slate-600 transition-colors duration-200
+      hover:bg-mist-100 hover:text-ink-900;
+  }
+
+  .btn-danger {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-red-600 px-5 py-3
+      font-body font-semibold text-white shadow-card transition-all duration-200
+      hover:bg-red-700 hover:-translate-y-0.5 active:translate-y-0
+      disabled:opacity-50 disabled:pointer-events-none;
+  }
+
+  .field-label {
+    @apply mb-1.5 block text-sm font-medium text-slate-200;
+  }
+
+  .field-label-light {
+    @apply mb-1.5 block text-sm font-medium text-slate-600;
+  }
+
+  .field-input {
+    @apply w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-white placeholder:text-slate-400
+      transition-all duration-200 focus:border-vital-400 focus:bg-white/10 focus:outline-none;
+  }
+
+  .field-input-light {
+    @apply w-full rounded-xl border border-mist-200 bg-white px-4 py-3 text-slate-800 placeholder:text-slate-400
+      transition-all duration-200 focus:border-vital-500 focus:ring-2 focus:ring-vital-500/20 focus:outline-none;
+  }
+
+  .card {
+    @apply rounded-xl2 border border-mist-200 bg-white shadow-card;
+  }
+
+  .badge {
+    @apply inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold;
+  }
+}

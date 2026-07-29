@@ -1,0 +1,58 @@
+[
+  {
+    "Name": "Paracetamol 500mg",
+    "Price": 15.50,
+    "Stock": 500,
+    "IsAvailable": true,
+    "PharmacistId": 10
+  },
+  {
+    "Name": "Amoxicillin 250mg",
+    "Price": 45.00,
+    "Stock": 200,
+    "IsAvailable": true,
+    "PharmacistId": 10
+  },
+  {
+    "Name": "Ibuprofen 400mg",
+    "Price": 22.75,
+    "Stock": 350,
+    "IsAvailable": true,
+    "PharmacistId": 10
+  },
+  {
+    "Name": "Omeprazole 20mg",
+    "Price": 38.00,
+    "Stock": 150,
+    "IsAvailable": true,
+    "PharmacistId": 11
+  },
+  {
+    "Name": "Metformin 500mg",
+    "Price": 28.50,
+    "Stock": 400,
+    "IsAvailable": true,
+    "PharmacistId": 11
+  },
+  {
+    "Name": "Atorvastatin 10mg",
+    "Price": 55.00,
+    "Stock": 180,
+    "IsAvailable": true,
+    "PharmacistId": 11
+  },
+  {
+    "Name": "Cetirizine 10mg",
+    "Price": 18.00,
+    "Stock": 300,
+    "IsAvailable": true,
+    "PharmacistId": 10
+  },
+  {
+    "Name": "Azithromycin 500mg",
+    "Price": 75.00,
+    "Stock": 0,
+    "IsAvailable": false,
+    "PharmacistId": 11
+  }
+]
