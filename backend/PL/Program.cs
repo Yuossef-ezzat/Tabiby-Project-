@@ -1,3 +1,4 @@
+using BLL;
 using BLL.Hubs;
 using BLL.Mapper;
 using BLL.Services.AbstractServices;
@@ -5,6 +6,7 @@ using BLL.Services.AbstractServices.Admin;
 using BLL.Services.AbstractServices.AppointmentModule;
 using BLL.Services.AbstractServices.ConsultationModule;
 using BLL.Services.AbstractServices.MedicationModule;
+using BLL.Services.AbstractServices.PaymobModule;
 using BLL.Services.AbstractServices.Users;
 using BLL.Services.ImplementationService;
 using BLL.Services.ImplementationService.Admin;
@@ -12,12 +14,14 @@ using BLL.Services.ImplementationService.AppointmentModule;
 using BLL.Services.ImplementationService.ConsultationModule;
 using BLL.Services.ImplementationService.MedicationModule;
 using BLL.Services.ImplementationService.NursingModule;
+using BLL.Services.ImplementationService.PaymobModule;
 using DAL.Data;
 using DAL.Models.Users;
 using DAL.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using PL.Utilites;
@@ -53,8 +57,14 @@ namespace PL
             builder.Services.AddScoped<IDoctorScheduleService, DoctorScheduleService>();
             builder.Services.AddScoped<IAdminService, AdminService>();
             builder.Services.AddScoped<IProfileUserService, ProfileUserService>();
+            builder.Services.Configure<PaymobSettings>(builder.Configuration.GetSection("Paymob"));
+            builder.Services.AddHttpClient<IPaymobClient, PaymobClient>((sp, client) =>
+            {
+                var settings = sp.GetRequiredService<IOptions<PaymobSettings>>().Value;
 
-            
+                client.BaseAddress = new Uri(settings.BaseUrl);
+            });
+
             builder.Services.AddAutoMapper((x) => { }, typeof(DomainProfile).Assembly);
             builder.Services.AddSignalR();
 

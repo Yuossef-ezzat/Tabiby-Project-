@@ -3,6 +3,7 @@ using DAL.Models.AppointmentModule;
 using DAL.Models.Consultation;
 using DAL.Models.NursingModule;
 using DAL.Models.OrderModule;
+using DAL.Models.PaymentModule;
 using DAL.Models.Users;
 using DomainLayer.Models.BasketModule;
 using Microsoft.AspNetCore.Identity;
@@ -44,8 +45,10 @@ namespace DAL.Data
         public DbSet<BasketItem> BasketItems { get; set; }
         public DbSet<CustomerBasket> CustomerBaskets { get; set; }
 
+        public DbSet<Payment> Payments { get; set; }
+        public DbSet<PaymentTransaction> PaymentTransactions { get; set; }
 
-        
+
         public DbSet<DoctorSchedule> DoctorSchedules { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
 

@@ -1,4 +1,5 @@
-﻿using DAL.Models.Users;
+﻿using DAL.Models.PaymentModule;
+using DAL.Models.Users;
 using DAL.Shared;
 using DAL.Shared.Enums;
 using System;
@@ -18,11 +19,13 @@ namespace DAL.Models.OrderModule
         public decimal SubTotal { get; set; }
         public decimal ShippingPrice { get; set; } = 20;
 
-                public OrderAddress Address { get; set; } = null!;
+        public OrderAddress Address { get; set; } = null!;
 
         public int PatientId { get; set; }
         public virtual Patient Patient { get; set; }
         public virtual List<OrderItem> OrderItem { get; set; }
+
+        public virtual List<Payment> Payments { get; set; } = new List<Payment>();
 
     }
 }
