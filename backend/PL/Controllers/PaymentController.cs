@@ -3,6 +3,7 @@ using BLL.Services.AbstractServices.PaymobModule.BLL.Services.Payment;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using PresentationLayer.Controller;
 
 namespace PL.Controllers
@@ -19,6 +20,7 @@ namespace PL.Controllers
         }
 
         [HttpPost("create")]
+        [EnableRateLimiting("Payment")]
         public async Task<IActionResult> Create([FromBody] CreatePaymentRequestDto request)
         {
             var result = await _paymentService.CreatePaymentAsync(request);

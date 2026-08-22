@@ -1,5 +1,6 @@
 using BLL.Dtos.IdentityDtos;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using PresentationLayer.Controller;
 using ServiceAbstractionLayer;
 using Shared.DTOs.IdentityDtos;
@@ -10,6 +11,7 @@ namespace PL.Controllers
     {
         
         [HttpPost("Login")]
+        [EnableRateLimiting("Auth")]
         public async Task<IActionResult> Login(LoginDto loginDto)
         {
             var user = await _authenticationService.LoginAsync(loginDto);
@@ -19,6 +21,7 @@ namespace PL.Controllers
         }
 
         [HttpPost("Register")]
+        [EnableRateLimiting("Auth")]
         public async Task<IActionResult> Register(RegisterDto model)
         {
             var user = await _authenticationService.RegisterAsync(model);
@@ -30,6 +33,7 @@ namespace PL.Controllers
         #region ForgetPassword
 
         [HttpPost("forget-password")]
+        [EnableRateLimiting("Auth")]
         public async Task<IActionResult> ForgetPassword([FromBody] ForgetPasswordDto dto)
         {
 

@@ -24,6 +24,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using PL.Extention;
 using PL.Utilites;
 using ServiceAbstractionLayer;
 using Swashbuckle.AspNetCore.SwaggerUI;
@@ -38,128 +39,24 @@ namespace PL
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            
-            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-            builder.Services.AddScoped<IUserRepository, UserRepository>();
-
-            builder.Services.AddScoped<DataSeeder, DataSeeder>();
-            builder.Services.AddScoped<INotificationService, NotificationService>();
-            builder.Services.AddScoped<IOrderService, OrderService>();
-            builder.Services.AddScoped<IBasketService, BasketService>();
-            builder.Services.AddScoped<IMedicationService, MedicationService>();
-            builder.Services.AddScoped<INursingService, NursingService>();
-            builder.Services.AddScoped<IConsultationService, ConsultationService>();
-            builder.Services.AddScoped<IConsultationChatService, ConsultationChatService>();
-            builder.Services.AddScoped<IConsultationReviewService, ConsultationReviewService>();
-            builder.Services.AddScoped<IAuthService, AuthService>();
-            builder.Services.AddScoped<IAttachmentService, AttachmentService>();
-            builder.Services.AddScoped<IAppointmentService, AppointmentService>();
-            builder.Services.AddScoped<IDoctorScheduleService, DoctorScheduleService>();
-            builder.Services.AddScoped<IAdminService, AdminService>();
-            builder.Services.AddScoped<IProfileUserService, ProfileUserService>();
-            builder.Services.Configure<PaymobSettings>(builder.Configuration.GetSection("Paymob"));
-            builder.Services.AddHttpClient<IPaymobClient, PaymobClient>((sp, client) =>
-            {
-                var settings = sp.GetRequiredService<IOptions<PaymobSettings>>().Value;
-
-                client.BaseAddress = new Uri(settings.BaseUrl);
-            });
-
-            builder.Services.AddAutoMapper((x) => { }, typeof(DomainProfile).Assembly);
-            builder.Services.AddSignalR();
-
-            builder.Services.AddControllers();
-
-            
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen(options => {
-                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+            builder.Services.AddApplicationServices(builder.Configuration)
+                .AddEndpointsApiExplorer()
+                .AddSwagger()
+                .AddAuthentication(builder.Configuration)
+                .AddDatabase(builder.Configuration)
+                .AddCors(options =>
                 {
-                    In = ParameterLocation.Header,
-                    Name = "Authorization",
-                    Type = SecuritySchemeType.ApiKey,
-                    Scheme = "Bearer",
-                    Description = "Enter 'Bearer' Followed by space And your token"
-                });
-                options.AddSecurityRequirement(new OpenApiSecurityRequirement()
-                {
+                    options.AddPolicy("AllowLocalhost", builder =>
                     {
-                        new OpenApiSecurityScheme()
-                        {
-                            Reference = new OpenApiReference()
-                            {
-                                Id = "Bearer",
-                                Type = ReferenceType.SecurityScheme
-                            }
-                        },
-                        new string []{}
-                    }
-                });
-            });
-            
-
-
-            builder.Services.AddAuthentication(Config =>
-            {
-                Config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                Config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(Config =>
-            {
-                Config.TokenValidationParameters = new TokenValidationParameters()
-                {
-                    ValidateIssuer = true,
-                    ValidIssuer = builder.Configuration["JwtOptions:Issuer"],
-                    ValidateAudience = true,
-                    
-                    ValidAudience = builder.Configuration["JwtOptions:Audience"],
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtOptions:SecretKey"]!)),
-                };
-                Config.Events = new JwtBearerEvents()
-                {
-                    OnMessageReceived = context =>
-                    {
-                        var accessToken = context.Request.Query["access_token"];
-                        if (!string.IsNullOrEmpty(accessToken) && 
-                                    context.HttpContext.Request.Path.StartsWithSegments("/notificationHub"))
-                        {
-                            context.Token = accessToken;
-                        }
-                        return Task.CompletedTask;
-                    }
-                };
-            });
-            
-            builder.Services.AddDbContext<TabibyDbContext>(
-                options => {
-                    options.UseSqlServer(builder.Configuration.GetConnectionString("TabibyDbContext"));
-                }
-            );
-            builder.Services.AddIdentityCore<ApplicationUser>(
-                options =>
-                {
-                    
-                    
-                    
+                        builder
+                            .WithOrigins("http://localhost:3000", "http://localhost:3001")
+                            .AllowAnyMethod()
+                            .AllowAnyHeader()
+                            .AllowCredentials();
+                    });
                 })
-                .AddRoles<IdentityRole<int>>()
-                .AddRoleManager<RoleManager<IdentityRole<int>>>()
-                .AddEntityFrameworkStores<TabibyDbContext>()
-                .AddDefaultTokenProviders();
-
-
-            builder.Services.AddCors(options =>
-            {
-                options.AddPolicy("AllowLocalhost", builder =>
-                {
-                    builder
-                        .WithOrigins("http://localhost:3000", "http://localhost:3001")
-                        .AllowAnyMethod()
-                        .AllowAnyHeader()
-                        .AllowCredentials();
-                });
-            });
+                .AddCustomRateLimiting()
+                .AddControllers();
 
             var app = builder.Build();
 
@@ -191,6 +88,7 @@ namespace PL
             app.UseCors("AllowLocalhost");
             app.UseRouting();
             app.UseAuthentication();
+            app.UseRateLimiter();
             app.UseAuthorization();
 
 

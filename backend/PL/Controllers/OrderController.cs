@@ -2,6 +2,7 @@ using BLL.Dtos.Order;
 using BLL.Services.AbstractServices.MedicationModule;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using PL.Extention;
 using PresentationLayer.Controller;
 using System.Security.Claims;
@@ -51,6 +52,7 @@ namespace PL.Controllers
         }
         [Authorize(Roles = "PATIENT")]
         [HttpPost("Create")]
+        [EnableRateLimiting("CreateOrder")]
         public async Task<IActionResult> CreateOrder([FromBody] CreateOrderDto dto)
         {
             
