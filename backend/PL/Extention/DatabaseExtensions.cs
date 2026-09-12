@@ -27,6 +27,7 @@ namespace PL.Extention
                 .AddEntityFrameworkStores<TabibyDbContext>()
                 .AddDefaultTokenProviders();
 
+
             return services;
         }
     }

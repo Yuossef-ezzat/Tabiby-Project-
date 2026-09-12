@@ -18,6 +18,7 @@ using BLL.Services.ImplementationService.PaymobModule;
 using DAL.Data;
 using DAL.Models.Users;
 using DAL.Repository;
+using DotNetEnv;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -37,6 +38,7 @@ namespace PL
     {
         public static async Task Main(string[] args)
         {
+            Env.TraversePath().Load();
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddApplicationServices(builder.Configuration)
@@ -82,7 +84,6 @@ namespace PL
             await seed.SeedDatabaseAsync();
 
             EmailSettings.Initialize(app.Configuration);
-
             app.UseHttpsRedirection();
             app.UseMiddleware<CustomExceptionHandlerMiddleWare>();
             app.UseCors("AllowLocalhost");

@@ -122,9 +122,7 @@ namespace DAL.Data
         private async Task SeedRolesAsync()
         {
             
-            
-            
-            
+             
             
             string[] defaultRoles = { "PATIENT", "DOCTOR", "ADMIN", "NURSE", "PHARMACIST" };
             foreach (var roleName in defaultRoles)

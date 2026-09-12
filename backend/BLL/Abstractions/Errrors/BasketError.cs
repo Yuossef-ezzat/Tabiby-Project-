@@ -11,6 +11,8 @@ namespace BLL.Abstractions.Errrors
     {
         public static Errror NotFound(int Id)
            => new("NotFound",$"Basket for patient with Id {Id} Not found");
+        public static Errror BasketEmpty(int Id)
+           => new("BasketEmpty", $"Basket for patient with Id {Id} is empty");
         public static Errror InsufficientStock(string medicationName,int availableStock)
            => new("InsufficientStock", $"'{medicationName}' has insufficient stock. Available quantity: {availableStock}.");
         public static Errror BasketAlreadyCheckedOut(int basketId)

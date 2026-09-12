@@ -3,6 +3,7 @@ using BLL.Services.AbstractServices.MedicationModule;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
+using PL.Attribute;
 using PL.Extention;
 using PresentationLayer.Controller;
 using System.Security.Claims;
@@ -52,6 +53,7 @@ namespace PL.Controllers
         }
         [Authorize(Roles = "PATIENT")]
         [HttpPost("Create")]
+        [Idempotency]
         [EnableRateLimiting("CreateOrder")]
         public async Task<IActionResult> CreateOrder([FromBody] CreateOrderDto dto)
         {
@@ -59,7 +61,7 @@ namespace PL.Controllers
             var result = await _orderService.CreateOrderAsync(User.GetUserId(), dto);
             if (!result.IsSuccess)
                 return BadRequest(result.Error.Message);
-            return Ok(result);
+            return Ok(result.Value);
         }
 
         #endregion

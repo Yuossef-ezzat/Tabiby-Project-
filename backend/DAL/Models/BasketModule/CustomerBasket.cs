@@ -16,7 +16,6 @@ namespace DomainLayer.Models.BasketModule
         public int PatientId { get; set; }
 
         public Patient Patient { get; set; }
-        public bool IsCheckedOut { get; set; }
         public decimal ShippingPrice { get; set; }
     }
 }

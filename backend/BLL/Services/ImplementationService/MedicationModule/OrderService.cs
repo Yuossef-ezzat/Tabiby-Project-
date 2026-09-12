@@ -49,14 +49,6 @@ namespace BLL.Services.ImplementationService.MedicationModule
 
             #endregion
 
-            var Basket = patient.Basket;
-
-            if(Basket != null)
-            {
-                Basket.IsCheckedOut = false;
-            }
-
-
             order.Status = OrderStatus.Cancelled;
 
             await _unitOfWork.SaveChangesAsync();
@@ -117,14 +109,16 @@ namespace BLL.Services.ImplementationService.MedicationModule
             if (patient is null)
                 return Result<OrderDto>.Failure(PatientError.PatientNotFound(patientId));
 
+            if(patient.Basket == null)
+                return Result<OrderDto>.Failure(BasketError.NotFound(patientId));
+
             var Basket = (await _unitOfWork.GetRepository<CustomerBasket>()
                                             .GetAllAsync(new BasketByIdSpecs(patient!.Basket!.Id))).FirstOrDefault();
             if (Basket == null)
                 return Result<OrderDto>.Failure(BasketError.NotFound(patient!.Basket!.Id));
 
-            if (Basket.IsCheckedOut)
-                return Result<OrderDto>.Failure(BasketError.BasketAlreadyCheckedOut(patient!.Basket!.Id));
-
+            if (!Basket.BasketItems.Any())
+                return Result<OrderDto>.Failure(BasketError.BasketEmpty(patient!.Basket!.Id));
             List<OrderItem> orderItems = new List<OrderItem>();
 
             var medicationRepo = _unitOfWork.GetRepository<Medication>();
@@ -176,8 +170,6 @@ namespace BLL.Services.ImplementationService.MedicationModule
             {
                 itemRepo.Delete(item);
             }
-            Basket.IsCheckedOut = false; 
-
 
             await _unitOfWork.SaveChangesAsync();
 

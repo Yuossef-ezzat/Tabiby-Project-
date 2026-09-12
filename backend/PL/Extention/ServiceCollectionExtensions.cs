@@ -50,6 +50,7 @@ namespace PL.Extention
 
                 client.BaseAddress = new Uri(settings.BaseUrl);
             });
+            services.AddDistributedMemoryCache();
 
             services.AddAutoMapper((x) => { }, typeof(DomainProfile).Assembly);
             services.AddSignalR();
